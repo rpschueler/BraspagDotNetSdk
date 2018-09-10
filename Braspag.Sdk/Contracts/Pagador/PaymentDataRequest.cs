@@ -62,7 +62,7 @@ namespace Braspag.Sdk.Contracts.Pagador
 
         public CredentialsDataRequest Credentials { get; set; }
 
-        public ExternalAuthenticationDataRequest ExternalAuthentication { get; set; }
+        public ExternalAuthenticationData ExternalAuthentication { get; set; }
 
         public AvsDataRequest Avs { get; set; }
 

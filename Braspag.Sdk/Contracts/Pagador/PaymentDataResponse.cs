@@ -4,14 +4,28 @@ namespace Braspag.Sdk.Contracts.Pagador
 {
     public class PaymentDataResponse
     {
+        /// <summary>
+        /// Id da transação no provedor do meio de pagamento
+        /// </summary>
         public string AcquirerTransactionId { get; set; }
 
+        /// <summary>
+        /// Valor da transação em centavos
+        /// </summary>
         public long Amount { get; set; }
+
+        /// <summary>
+        /// URL para qual o Lojista deve redirecionar o Cliente para o fluxo de autenticação
+        /// </summary>
+        public string AuthenticationUrl { get; set; }
 
         public string Assignor { get; set; }
 
         public bool? Authenticate { get; set; }
 
+        /// <summary>
+        /// Código de autorização da transação
+        /// </summary>
         public string AuthorizationCode { get; set; }
 
         public AvsDataRequest Avs { get; set; }
@@ -44,7 +58,7 @@ namespace Braspag.Sdk.Contracts.Pagador
 
         public string ExpirationDate { get; set; }
 
-        public ExternalAuthenticationDataRequest ExternalAuthentication { get; set; }
+        public ExternalAuthenticationData ExternalAuthentication { get; set; }
 
         public List<ExtraData> ExtraDataCollection { get; set; }
 
@@ -56,6 +70,9 @@ namespace Braspag.Sdk.Contracts.Pagador
 
         public string Identification { get; set; }
 
+        /// <summary>
+        /// Número de parcelas da transação
+        /// </summary>
         public int Installments { get; set; }
 
         public string Instructions { get; set; }
@@ -68,20 +85,44 @@ namespace Braspag.Sdk.Contracts.Pagador
 
         public List<LinkData> Links { get; set; }
 
+        /// <summary>
+        /// ID da transação na Braspag
+        /// </summary>
         public string PaymentId { get; set; }
 
+        /// <summary>
+        /// Número do Comprovante de Venda
+        /// </summary>
         public string ProofOfSale { get; set; }
 
+        /// <summary>
+        /// Nome do provedor do meio de pagamento
+        /// </summary>
         public string Provider { get; set; }
 
+        /// <summary>
+        /// Código retornado pelo provedor do meio de pagamento (adquirente e bancos)
+        /// </summary>
         public string ProviderReturnCode { get; set; }
 
+        /// <summary>
+        /// Mensagem retornada pelo provedor do meio de pagamento (adquirente e bancos)
+        /// </summary>
         public string ProviderReturnMessage { get; set; }
 
+        /// <summary>
+        /// Código de retorno da Operação
+        /// </summary>
         public string ReasonCode { get; set; }
 
+        /// <summary>
+        /// Mensagem de retorno da Operação
+        /// </summary>
         public string ReasonMessage { get; set; }
 
+        /// <summary>
+        /// Data em que a transação foi recebida pela Braspag
+        /// </summary>
         public string ReceivedDate { get; set; }
 
         public bool? Recurrent { get; set; }
@@ -94,37 +135,16 @@ namespace Braspag.Sdk.Contracts.Pagador
 
         public string SoftDescriptor { get; set; }
 
-        public string Status { get; set; }
+        /// <summary>
+        /// Status da Transação
+        /// </summary>
+        public TransactionStatus Status { get; set; }
 
+        /// <summary>
+        /// Tipo do Meio de Pagamento (CreditCard, DebitCard)
+        /// </summary>
         public string Type { get; set; }
 
         public WalletDataRequest Wallet { get; set; }
-
-        public string GetStatusDescription()
-        {
-            switch (Status)
-            {
-                case "0":
-                    return "NotFinished";
-                case "1":
-                    return "Authorized";
-                case "2":
-                    return "PaymentConfirmed";
-                case "3":
-                    return "Denied";
-                case "10":
-                    return "Voided";
-                case "11":
-                    return "Refunded";
-                case "12":
-                    return "Pending";
-                case "13":
-                    return "Aborted";
-                case "20":
-                    return "Scheduled";
-                default:
-                    return string.Empty;
-            }
-        }
     }
 }

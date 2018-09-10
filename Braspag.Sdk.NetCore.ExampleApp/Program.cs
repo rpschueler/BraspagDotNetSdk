@@ -12,15 +12,9 @@ namespace Braspag.Sdk.NetCore.ExampleApp
         static void Main(string[] args)
         {
             Console.WriteLine("Braspag SDK Example App - C# / .NET Core");
+            Console.WriteLine();
 
-            CreateCreditCardSaleAsync().Wait();
-        }
-
-        /// <summary>
-        /// Cria um pagamento com cartão de crédito via Pagador
-        /// </summary>
-        private static async Task CreateCreditCardSaleAsync()
-        {
+            /* Criação do Cliente Pagador */
             var pagadorClient = new PagadorClient(new PagadorClientOptions
             {
                 Environment = Environment.Sandbox,
@@ -31,6 +25,31 @@ namespace Braspag.Sdk.NetCore.ExampleApp
                 }
             });
 
+            /* Autorização */
+            var sale = CreateCreditCardSaleAsync(pagadorClient).Result;
+
+            Console.WriteLine("Transaction authorized");
+            Console.WriteLine($"Order ID: {sale.MerchantOrderId}");
+            Console.WriteLine($"Payment ID: {sale.Payment.PaymentId}");
+            Console.WriteLine($"Payment Status: {sale.Payment.Status} [{(int)sale.Payment.Status}]");
+            Console.WriteLine();
+
+            /* Captura */
+            var saleCapture = CaptureSaleAsync(sale.Payment.PaymentId, pagadorClient).Result;
+
+            Console.WriteLine("Transaction captured");
+            Console.WriteLine($"Payment Status: {saleCapture.Status} [{(int)saleCapture.Status}]");
+
+            Console.WriteLine();
+            Console.WriteLine("Press any key to close the app...");
+            Console.ReadKey();
+        }
+
+        /// <summary>
+        /// Cria um pagamento com cartão de crédito via Pagador
+        /// </summary>
+        private static async Task<SaleResponse> CreateCreditCardSaleAsync(IPagadorClient client)
+        {
             var request = new SaleRequest
             {
                 MerchantOrderId = DateTime.Now.Ticks.ToString(),
@@ -96,13 +115,18 @@ namespace Braspag.Sdk.NetCore.ExampleApp
                 }
             };
 
-            var response = await pagadorClient.CreateSaleAsync(request);
+            return await client.CreateSaleAsync(request);
+        }
 
-            Console.WriteLine($"Order ID: {response.MerchantOrderId}");
-            Console.WriteLine($"Payment ID: {response.Payment.PaymentId}");
-            Console.WriteLine($"Payment Status: {response.Payment.Status} [{response.Payment.GetStatusDescription()}]");
-            Console.WriteLine("Press any key to close the app...");
-            Console.ReadKey();
+        private static async Task<CaptureResponse> CaptureSaleAsync(string paymentId, IPagadorClient client)
+        {
+            var request = new CaptureRequest
+            {
+                Amount = 100000,
+                PaymentId = paymentId
+            };
+
+            return await client.CaptureAsync(request);
         }
     }
 }

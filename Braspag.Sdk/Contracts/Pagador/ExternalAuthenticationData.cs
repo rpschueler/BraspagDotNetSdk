@@ -1,6 +1,6 @@
 ﻿namespace Braspag.Sdk.Contracts.Pagador
 {
-    public class ExternalAuthenticationDataRequest
+    public class ExternalAuthenticationData
     {
         public string Cavv { get; set; }
 

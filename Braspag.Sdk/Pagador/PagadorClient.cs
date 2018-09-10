@@ -1,12 +1,13 @@
 ﻿using Braspag.Sdk.Common;
 using Braspag.Sdk.Contracts.Pagador;
 using RestSharp;
+using RestSharp.Deserializers;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
-using RestSharp.Deserializers;
 using Environment = Braspag.Sdk.Common.Environment;
 
 namespace Braspag.Sdk.Pagador
@@ -56,21 +57,65 @@ namespace Braspag.Sdk.Pagador
 
             var httpResponse = await RestClient.ExecuteTaskAsync(httpRequest, cancellationTokenSource.Token);
 
-            if (httpResponse.StatusCode == HttpStatusCode.Created)
+            if (httpResponse.StatusCode != HttpStatusCode.Created)
             {
-                return JsonDeserializer.Deserialize<SaleResponse>(httpResponse);
+                return new SaleResponse
+                {
+                    HttpStatus = httpResponse.StatusCode,
+                    ErrorDataCollection = JsonDeserializer.Deserialize<List<ErrorData>>(httpResponse)
+                };
             }
 
-            return new SaleResponse
-            {
-                HttpStatus = httpResponse.StatusCode,
-                ErrorDataCollection = JsonDeserializer.Deserialize<List<ErrorData>>(httpResponse)
-            };
+            var jsonResponse = JsonDeserializer.Deserialize<SaleResponse>(httpResponse);
+            jsonResponse.HttpStatus = httpResponse.StatusCode;
+            return jsonResponse;
         }
 
-        public Task<CaptureResponse> CaptureAsync(CaptureRequest request, MerchantCredentials credentials = null)
+        public async Task<CaptureResponse> CaptureAsync(CaptureRequest request, MerchantCredentials credentials = null)
         {
-            throw new NotImplementedException();
+            if (request == null)
+                throw new ArgumentNullException(nameof(request));
+
+            if (_credentials == null && credentials == null)
+                throw new InvalidOperationException("Credentials are null");
+
+            var currentCredentials = credentials ?? _credentials;
+
+            if (string.IsNullOrWhiteSpace(currentCredentials.MerchantId))
+                throw new InvalidOperationException("Invalid credentials: MerchantId is null");
+
+            if (string.IsNullOrWhiteSpace(currentCredentials.MerchantKey))
+                throw new InvalidOperationException("Invalid credentials: MerchantKey is null");
+
+            var httpRequest = new RestRequest(@"v2/sales/{paymentId}/capture", Method.PUT) { RequestFormat = DataFormat.Json };
+            httpRequest.AddHeader("Content-Type", "application/json");
+            httpRequest.AddHeader("MerchantId", currentCredentials.MerchantId);
+            httpRequest.AddHeader("MerchantKey", currentCredentials.MerchantKey);
+            httpRequest.AddHeader("RequestId", Guid.NewGuid().ToString());
+            httpRequest.AddUrlSegment("paymentId", request.PaymentId);
+            httpRequest.AddQueryParameter("amount", request.Amount.ToString(CultureInfo.InvariantCulture));
+
+            if (request.ServiceTaxAmount.HasValue)
+            {
+                httpRequest.AddQueryParameter("serviceTaxAmount", request.ServiceTaxAmount.Value.ToString(CultureInfo.InvariantCulture));
+            }
+
+            var cancellationTokenSource = new CancellationTokenSource();
+
+            var httpResponse = await RestClient.ExecuteTaskAsync(httpRequest, cancellationTokenSource.Token);
+
+            if (httpResponse.StatusCode != HttpStatusCode.OK)
+            {
+                return new CaptureResponse
+                {
+                    HttpStatus = httpResponse.StatusCode,
+                    ErrorDataCollection = JsonDeserializer.Deserialize<List<ErrorData>>(httpResponse)
+                };
+            }
+
+            var jsonResponse = JsonDeserializer.Deserialize<CaptureResponse>(httpResponse);
+            jsonResponse.HttpStatus = httpResponse.StatusCode;
+            return jsonResponse;
         }
 
         public Task<VoidResponse> VoidAsync(VoidRequest request, MerchantCredentials credentials = null)
