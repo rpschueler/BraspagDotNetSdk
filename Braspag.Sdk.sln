@@ -7,6 +7,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Braspag.Sdk", "Braspag.Sdk\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Braspag.Sdk.NetCore.ExampleApp", "Braspag.Sdk.NetCore.ExampleApp\Braspag.Sdk.NetCore.ExampleApp.csproj", "{2E5F6DC9-CF96-4C5D-A09B-BCDE5F9E04BA}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{03199C7F-EE19-472F-8171-86C0C52D26EA}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+		StyleCop\stylecop.json = StyleCop\stylecop.json
+		StyleCop\stylecop.ruleset = StyleCop\stylecop.ruleset
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
