@@ -54,9 +54,9 @@ namespace Braspag.Sdk.Contracts.Pagador
 
         public long? InterestAmount { get; set; }
 
-        public CreditCardDataRequest CreditCard { get; set; }
+        public CreditCardData CreditCard { get; set; }
 
-        public DebitCardDataRequest DebitCard { get; set; }
+        public DebitCardData DebitCard { get; set; }
 
         public WalletDataRequest Wallet { get; set; }
 
@@ -70,6 +70,6 @@ namespace Braspag.Sdk.Contracts.Pagador
 
         public RecurrentPaymentDataRequest RecurrentPayment { get; set; }
 
-        public List<ExtraDataRequest> ExtraDataCollection { get; set; }
+        public List<ExtraData> ExtraDataCollection { get; set; }
     }
 }

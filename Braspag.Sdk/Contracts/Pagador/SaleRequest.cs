@@ -4,7 +4,7 @@
     {
         public string MerchantOrderId { get; set; }
 
-        public CustomerDataRequest Customer { get; set; }
+        public CustomerData Customer { get; set; }
 
         public PaymentDataRequest Payment { get; set; }
     }

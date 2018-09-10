@@ -1,6 +1,6 @@
 ﻿namespace Braspag.Sdk.Contracts.Pagador
 {
-    public class CreditCardDataResponse
+    public class CreditCardData
     {
         public string CardToken { get; set; }
 

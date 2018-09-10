@@ -1,6 +1,6 @@
 ﻿namespace Braspag.Sdk.Contracts.Pagador
 {
-    public class DebitCardDataRequest
+    public class DebitCardData
     {
         public string CardNumber { get; set; }
 

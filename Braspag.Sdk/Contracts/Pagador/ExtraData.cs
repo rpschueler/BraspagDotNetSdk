@@ -1,6 +1,6 @@
 ﻿namespace Braspag.Sdk.Contracts.Pagador
 {
-    public class ExtraDataRequest
+    public class ExtraData
     {
         public string Name { get; set; }
 

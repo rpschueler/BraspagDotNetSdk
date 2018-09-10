@@ -1,6 +1,6 @@
 ﻿namespace Braspag.Sdk.Contracts.Pagador
 {
-    public class LinkDataResponse
+    public class LinkData
     {
         public string Method { get; set; }
 

@@ -11,7 +11,7 @@ namespace Braspag.Sdk.NetCore.ExampleApp
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Braspag SDK .NET Core Example App");
+            Console.WriteLine("Braspag SDK Example App - C# / .NET Core");
 
             CreateCreditCardSaleAsync().Wait();
         }
@@ -34,7 +34,7 @@ namespace Braspag.Sdk.NetCore.ExampleApp
             var request = new SaleRequest
             {
                 MerchantOrderId = DateTime.Now.Ticks.ToString(),
-                Customer = new CustomerDataRequest
+                Customer = new CustomerData
                 {
                     Name = "Bjorn Ironside",
                     Birthdate = "1990-12-25",
@@ -43,7 +43,7 @@ namespace Braspag.Sdk.NetCore.ExampleApp
                     Email = "bjorn.ironside@vikings.com.br",
                     Mobile = "11 99999-9999",
                     Phone = "11 8888-8888",
-                    Address = new AddressDataRequest
+                    Address = new AddressData
                     {
                         Street = "Alameda Xingu",
                         Number = "512",
@@ -54,7 +54,7 @@ namespace Braspag.Sdk.NetCore.ExampleApp
                         Country = "Brasil",
                         ZipCode = "06455-030"
                     },
-                    DeliveryAddress = new AddressDataRequest
+                    DeliveryAddress = new AddressData
                     {
                         Street = "Av. Marechal Camara",
                         Number = "160",
@@ -76,7 +76,7 @@ namespace Braspag.Sdk.NetCore.ExampleApp
                     Country = "BRA",
                     Installments = 1,
                     SoftDescriptor = "Braspag SDK",
-                    CreditCard = new CreditCardDataRequest
+                    CreditCard = new CreditCardData
                     {
                         CardNumber = "4485623136297301",
                         Holder = "BJORN IRONSIDE",
@@ -85,9 +85,9 @@ namespace Braspag.Sdk.NetCore.ExampleApp
                         Brand = "visa",
                         SaveCard = true
                     },
-                    ExtraDataCollection = new List<ExtraDataRequest>
+                    ExtraDataCollection = new List<ExtraData>
                     {
-                        new ExtraDataRequest
+                        new ExtraData
                         {
                             Name = "OrderNumber",
                             Value = "100000000"
@@ -97,6 +97,12 @@ namespace Braspag.Sdk.NetCore.ExampleApp
             };
 
             var response = await pagadorClient.CreateSaleAsync(request);
+
+            Console.WriteLine($"Order ID: {response.MerchantOrderId}");
+            Console.WriteLine($"Payment ID: {response.Payment.PaymentId}");
+            Console.WriteLine($"Payment Status: {response.Payment.Status} [{response.Payment.GetStatusDescription()}]");
+            Console.WriteLine("Press any key to close the app...");
+            Console.ReadKey();
         }
     }
 }

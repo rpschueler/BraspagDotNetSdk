@@ -1,6 +1,6 @@
 ﻿namespace Braspag.Sdk.Contracts.Pagador
 {
-    public class CustomerDataResponse
+    public class CustomerData
     {
         public string Name { get; set; }
 
@@ -16,8 +16,8 @@
 
         public string Phone { get; set; }
 
-        public AddressDataResponse Address { get; set; }
+        public AddressData Address { get; set; }
 
-        public AddressDataResponse DeliveryAddress { get; set; }
+        public AddressData DeliveryAddress { get; set; }
     }
 }

@@ -5,12 +5,14 @@ namespace Braspag.Sdk.Contracts.Pagador
 {
     public class SaleResponse
     {
-        public string MerchantOrderId { get; set; }
+        public CustomerData Customer { get; set; }
 
-        public CustomerDataResponse Customer { get; set; }
+        public List<ErrorData> ErrorDataCollection { get; set; }
 
         public HttpStatusCode HttpStatus { get; set; }
 
-        public List<Error> ErrorDataCollection { get; set; }
+        public string MerchantOrderId { get; set; }
+
+        public PaymentDataResponse Payment { get; set; }
     }
 }

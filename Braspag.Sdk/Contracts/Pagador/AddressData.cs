@@ -1,6 +1,6 @@
 ﻿namespace Braspag.Sdk.Contracts.Pagador
 {
-    public class AddressDataRequest
+    public class AddressData
     {
         public string Street { get; set; }
 
