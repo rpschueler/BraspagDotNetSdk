@@ -21,8 +21,6 @@ namespace Braspag.Sdk.Contracts.Pagador
 
         public string Assignor { get; set; }
 
-        public bool? Authenticate { get; set; }
-
         /// <summary>
         /// Código de autorização da transação
         /// </summary>
@@ -31,8 +29,6 @@ namespace Braspag.Sdk.Contracts.Pagador
         public AvsDataRequest Avs { get; set; }
 
         public string BoletoNumber { get; set; }
-
-        public bool Capture { get; set; }
 
         public long? CapturedAmount { get; set; }
 

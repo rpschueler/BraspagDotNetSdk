@@ -12,6 +12,6 @@ namespace Braspag.Sdk.Pagador
 
         Task<VoidResponse> VoidAsync(VoidRequest request, MerchantCredentials credentials = null);
 
-        Task<SaleResponse> GetAsync(Guid paymentId, MerchantCredentials credentials = null);
+        Task<SaleResponse> GetAsync(string paymentId, MerchantCredentials credentials = null);
     }
 }
