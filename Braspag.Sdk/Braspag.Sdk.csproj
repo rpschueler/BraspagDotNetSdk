@@ -6,7 +6,7 @@
 
   <PropertyGroup>
     <CodeAnalysisRuleSet>$(ProjectDir)..\.\StyleCop\stylecop.ruleset</CodeAnalysisRuleSet>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <Authors>Braspag Labs</Authors>
     <Company>Braspag</Company>
     <Description>SDK para serviços da plataforma Braspag</Description>
