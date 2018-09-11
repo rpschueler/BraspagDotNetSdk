@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28010.2019
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Braspag.Sdk", "Braspag.Sdk\Braspag.Sdk.csproj", "{E45062CA-611D-4CF1-B2CF-323F38D15538}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Braspag.Sdk", "Braspag.Sdk\Braspag.Sdk.csproj", "{E45062CA-611D-4CF1-B2CF-323F38D15538}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Braspag.Sdk.NetCore.ExampleApp", "Braspag.Sdk.NetCore.ExampleApp\Braspag.Sdk.NetCore.ExampleApp.csproj", "{2E5F6DC9-CF96-4C5D-A09B-BCDE5F9E04BA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Braspag.Sdk.NetCore.ExampleApp", "Braspag.Sdk.NetCore.ExampleApp\Braspag.Sdk.NetCore.ExampleApp.csproj", "{2E5F6DC9-CF96-4C5D-A09B-BCDE5F9E04BA}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{03199C7F-EE19-472F-8171-86C0C52D26EA}"
 	ProjectSection(SolutionItems) = preProject
@@ -13,6 +13,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		StyleCop\stylecop.json = StyleCop\stylecop.json
 		StyleCop\stylecop.ruleset = StyleCop\stylecop.ruleset
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Braspag.Sdk.Tests", "Braspag.Sdk.Tests\Braspag.Sdk.Tests.csproj", "{E16FF413-1C86-44AF-9BC3-C34B1E70A599}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -28,6 +30,10 @@ Global
 		{2E5F6DC9-CF96-4C5D-A09B-BCDE5F9E04BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2E5F6DC9-CF96-4C5D-A09B-BCDE5F9E04BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2E5F6DC9-CF96-4C5D-A09B-BCDE5F9E04BA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E16FF413-1C86-44AF-9BC3-C34B1E70A599}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E16FF413-1C86-44AF-9BC3-C34B1E70A599}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E16FF413-1C86-44AF-9BC3-C34B1E70A599}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E16FF413-1C86-44AF-9BC3-C34B1E70A599}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
