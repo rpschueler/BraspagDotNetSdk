@@ -2,10 +2,15 @@
 using Braspag.Sdk.Contracts.CartaoProtegido;
 using RestSharp;
 using System;
+using System.Collections.Generic;
+using System.Net;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Braspag.Sdk.Contracts.Pagador;
+using RestSharp.Deserializers;
 using Environment = Braspag.Sdk.Common.Environment;
+using MerchantCredentials = Braspag.Sdk.Contracts.CartaoProtegido.MerchantCredentials;
 
 namespace Braspag.Sdk.CartaoProtegido
 {
@@ -41,25 +46,41 @@ namespace Braspag.Sdk.CartaoProtegido
             var httpRequest = new RestRequest(@"v2/cartaoprotegido.asmx", Method.POST)
             {
                 RequestFormat = DataFormat.Xml,
-                XmlSerializer = new RestSharp.Serializers.DotNetXmlSerializer()
+                XmlSerializer = new RestSharp.Serializers.DotNetXmlSerializer(),
+                XmlNamespace = "http://www.cartaoprotegido.com.br/WebService/"
             };
 
-            httpRequest.AddHeader("Content-Type", "text/xml");
-            httpRequest.AddBody(request);
+            //httpRequest.AddHeader("Content-Type", "text/xml");
 
+            var sb = new StringBuilder();
+            sb.AppendLine("<soap:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">");
+            sb.AppendLine("<soap:Body>");
+            sb.AppendLine("<GetCreditCard xmlns=\"http://www.cartaoprotegido.com.br/WebService/\">");
+            sb.AppendLine("<getCreditCardRequestWS>");
+            sb.AppendLine($"<MerchantKey>{currentCredentials.MerchantKey}</MerchantKey>");
+            sb.AppendLine($"<JustClickKey>{request.JustClickKey}</JustClickKey>");
+            sb.AppendLine($"<JustClickAlias>{request.JustClickAlias}</JustClickAlias>");
+            sb.AppendLine("</getCreditCardRequestWS>");
+            sb.AppendLine("</GetCreditCard>");
+            sb.AppendLine("</soap:Body>");
+            sb.AppendLine("</soap:Envelope>");
 
-            //httpRequest.AddHeader("MerchantKey", currentCredentials.MerchantKey);
-
-            //var sb = new StringBuilder();
-            //sb.AppendFormat("<soap:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">");
-            //sb.AppendFormat("<soap:Body>");
-
+            httpRequest.AddParameter("text/xml", sb.ToString(), ParameterType.RequestBody);
 
             var cancellationTokenSource = new CancellationTokenSource();
 
             var httpResponse = await RestClient.ExecuteTaskAsync(httpRequest, cancellationTokenSource.Token);
 
-            throw new System.NotImplementedException();
+            if (httpResponse.StatusCode != HttpStatusCode.OK)
+            {
+                throw new System.NotImplementedException();
+            }
+
+            IDeserializer teste = new XmlDeserializer();
+
+            var jsonResponse = teste.Deserialize<GetCreditCardResponse>(httpResponse);
+            //jsonResponse.HttpStatus = httpResponse.StatusCode;
+            return jsonResponse;
         }
     }
 }
