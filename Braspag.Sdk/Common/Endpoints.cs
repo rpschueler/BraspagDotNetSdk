@@ -9,5 +9,9 @@
         public const string PagadorQueryApiProduction = "https://api.braspag.com.br/";
 
         public const string PagadorQueryApiSandbox = "https://apiquerysandbox.braspag.com.br/";
+
+        public const string CartaoProtegidoSandbox = "https://cartaoprotegidosandbox.braspag.com.br/";
+
+        public const string CartaoProtegidoProduction = "https://cartaoprotegido.braspag.com.br/";
     }
 }
