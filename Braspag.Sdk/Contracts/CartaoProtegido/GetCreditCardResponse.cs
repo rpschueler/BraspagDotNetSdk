@@ -1,6 +1,6 @@
 ﻿namespace Braspag.Sdk.Contracts.CartaoProtegido
 {
-    public class GetCreditCardResponse
+    public class GetCreditCardResponse : BaseResponse
     {
         public string CardHolder { get; set; }
 

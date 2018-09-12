@@ -1,16 +1,13 @@
 ﻿using Braspag.Sdk.Common;
 using Braspag.Sdk.Contracts.CartaoProtegido;
 using RestSharp;
+using RestSharp.Deserializers;
 using System;
-using System.Collections.Generic;
 using System.Net;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Braspag.Sdk.Contracts.Pagador;
-using RestSharp.Deserializers;
 using Environment = Braspag.Sdk.Common.Environment;
-using MerchantCredentials = Braspag.Sdk.Contracts.CartaoProtegido.MerchantCredentials;
 
 namespace Braspag.Sdk.CartaoProtegido
 {
@@ -22,12 +19,14 @@ namespace Braspag.Sdk.CartaoProtegido
 
         public IRestClient RestClient { get; }
 
+        public IDeserializer XmlDeserializer { get; }
+
         public CartaoProtegidoClient(CartaoProtegidoClientOptions options)
         {
             _options = options ?? throw new ArgumentNullException(nameof(options));
             _credentials = options.Credentials;
             RestClient = _options.Environment == Environment.Production ? new RestClient { BaseUrl = new Uri(Endpoints.CartaoProtegidoProduction) } : new RestClient { BaseUrl = new Uri(Endpoints.CartaoProtegidoSandbox) };
-            //JsonDeserializer = new JsonDeserializer();
+            XmlDeserializer = new XmlDeserializer();
         }
 
         public async Task<GetCreditCardResponse> GetCreditCardAsync(GetCreditCardRequest request, MerchantCredentials credentials = null)
@@ -46,11 +45,8 @@ namespace Braspag.Sdk.CartaoProtegido
             var httpRequest = new RestRequest(@"v2/cartaoprotegido.asmx", Method.POST)
             {
                 RequestFormat = DataFormat.Xml,
-                XmlSerializer = new RestSharp.Serializers.DotNetXmlSerializer(),
-                XmlNamespace = "http://www.cartaoprotegido.com.br/WebService/"
+                XmlSerializer = new RestSharp.Serializers.DotNetXmlSerializer()
             };
-
-            //httpRequest.AddHeader("Content-Type", "text/xml");
 
             var sb = new StringBuilder();
             sb.AppendLine("<soap:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">");
@@ -76,11 +72,39 @@ namespace Braspag.Sdk.CartaoProtegido
                 throw new System.NotImplementedException();
             }
 
-            IDeserializer teste = new XmlDeserializer();
-
-            var jsonResponse = teste.Deserialize<GetCreditCardResponse>(httpResponse);
-            //jsonResponse.HttpStatus = httpResponse.StatusCode;
+            var jsonResponse = XmlDeserializer.Deserialize<GetCreditCardResponse>(httpResponse);
+            jsonResponse.HttpStatus = httpResponse.StatusCode;
             return jsonResponse;
+        }
+
+        public Task<GetMaskedCreditCardResponse> GetMaskedCreditCardAsync(GetMaskedCreditCardRequest request, MerchantCredentials credentials = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<GetJustClickKeyResponse> GetJustClickKeyAsync(GetJustClickKeyRequest request, MerchantCredentials credentials = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<GetExtraDataResponse> GetExtraDataAsync(GetExtraDataRequest request, MerchantCredentials credentials = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<SaveCreditCardResponse> SaveCreditCardAsync(SaveCreditCardRequest request, MerchantCredentials credentials = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<InvalidateCreditCardResponse> InvalidateCreditCardAsync(InvalidateCreditCardRequest request, MerchantCredentials credentials = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<SetExtraDataResponse> SetExtraDataAsync(SetExtraDataRequest request, MerchantCredentials credentials = null)
+        {
+            throw new NotImplementedException();
         }
     }
 }
