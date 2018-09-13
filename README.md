@@ -2,12 +2,12 @@
 
 [![Build status](https://braspag.visualstudio.com/Innovation/_apis/build/status/Braspag-DotNet-SDK)](https://braspag.visualstudio.com/Innovation/_build/latest?definitionId=470)
 
-SDK para integração simplificada nos serviços da plataforma [Braspag](https://www.braspag.com.br/packages/Braspag.Sdk/)
+SDK para integração simplificada nos serviços da plataforma [Braspag](http://www.braspag.com.br/#solucoes)
 
 ### Features
 
 * Assembly para .NET Standard 2.0
-* Instalação simplificada utilizando [NuGet](http://www.braspag.com.br/#solucoes), sem necessidade de arquivos de configuração
+* Instalação simplificada utilizando [NuGet](https://www.braspag.com.br/packages/Braspag.Sdk/), sem necessidade de arquivos de configuração
 * Endpoints Braspag já configurados no pacote
 * Seleção de ambientes Sandbox ou Production
 * Métodos assíncronos para melhor desempenho nas requisições
