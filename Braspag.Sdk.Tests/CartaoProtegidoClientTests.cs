@@ -1,7 +1,7 @@
-using System;
 using Braspag.Sdk.CartaoProtegido;
 using Braspag.Sdk.Contracts.CartaoProtegido;
 using Braspag.Sdk.Tests.AutoFixture;
+using System;
 using System.Net;
 using System.Threading.Tasks;
 using Xunit;
@@ -103,6 +103,74 @@ namespace Braspag.Sdk.Tests
             var response = await sut.GetMaskedCreditCardAsync(request, new MerchantCredentials { MerchantKey = "106c8a0c-89a4-4063-bf50-9e6c8530593b" });
 
             Assert.Equal(HttpStatusCode.InternalServerError, response.HttpStatus);
+        }
+
+        #endregion
+
+        #region SaveCreditCardAsync
+
+        [Theory, AutoNSubstituteData]
+        public async Task SaveCreditCardAsync_ReturnsJustClickToken(CartaoProtegidoClient sut)
+        {
+            var request = new SaveCreditCardRequest
+            {
+                CustomerName = "Bjorn Ironside",
+                CustomerIdentification = "762.502.520-96",
+                CardHolder = "BJORN IRONSIDE",
+                CardExpiration = "10/2025",
+                CardNumber = "1000100010001000",
+                JustClickAlias = DateTime.Now.Ticks.ToString()
+            };
+
+            var response = await sut.SaveCreditCardAsync(request, new MerchantCredentials { MerchantKey = "106c8a0c-89a4-4063-bf50-9e6c8530593b" });
+
+            Assert.Equal(HttpStatusCode.OK, response.HttpStatus);
+            Assert.Empty(response.ErrorDataCollection);
+            Assert.NotNull(response.JustClickKey);
+        }
+
+        #endregion
+
+        #region InvalidateCreditCardAsync
+
+        [Theory, AutoNSubstituteData]
+        public async Task InvalidateCreditCardAsync_ForValidToken_ReturnsOK(CartaoProtegidoClient sut)
+        {
+            var saveRequest = new SaveCreditCardRequest
+            {
+                CustomerName = "Bjorn Ironside",
+                CustomerIdentification = "762.502.520-96",
+                CardHolder = "BJORN IRONSIDE",
+                CardExpiration = "10/2025",
+                CardNumber = "1000100010001000"
+            };
+
+            var saveResponse = await sut.SaveCreditCardAsync(saveRequest, new MerchantCredentials { MerchantKey = "106c8a0c-89a4-4063-bf50-9e6c8530593b" });
+
+            Assert.Equal(HttpStatusCode.OK, saveResponse.HttpStatus);
+            Assert.Empty(saveResponse.ErrorDataCollection);
+            Assert.NotNull(saveResponse.JustClickKey);
+
+            var invalidateRequest = new InvalidateCreditCardRequest
+            {
+                JustClickKey = saveResponse.JustClickKey
+            };
+
+            var invalidateResponse = await sut.InvalidateCreditCardAsync(invalidateRequest, new MerchantCredentials { MerchantKey = "106c8a0c-89a4-4063-bf50-9e6c8530593b" });
+            Assert.Equal(HttpStatusCode.OK, invalidateResponse.HttpStatus);
+        }
+
+        [Theory, AutoNSubstituteData]
+        public async Task InvalidateCreditCardAsync_ForInvalidToken_ReturnsErrorMessage(CartaoProtegidoClient sut)
+        {
+            var request = new InvalidateCreditCardRequest
+            {
+                JustClickKey = Guid.NewGuid().ToString()
+            };
+
+            var response = await sut.InvalidateCreditCardAsync(request, new MerchantCredentials { MerchantKey = "106c8a0c-89a4-4063-bf50-9e6c8530593b" });
+            Assert.Equal(HttpStatusCode.OK, response.HttpStatus);
+            Assert.NotEmpty(response.ErrorDataCollection);
         }
 
         #endregion

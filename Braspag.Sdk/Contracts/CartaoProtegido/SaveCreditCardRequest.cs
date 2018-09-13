@@ -15,7 +15,5 @@ namespace Braspag.Sdk.Contracts.CartaoProtegido
         public string CardExpiration { get; set; }
 
         public string JustClickAlias { get; set; }
-
-        public List<ExtraData> DataCollection { get; set; }
     }
 }

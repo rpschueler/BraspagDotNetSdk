@@ -11,12 +11,8 @@ namespace Braspag.Sdk.CartaoProtegido
 
         Task<GetJustClickKeyResponse> GetJustClickKeyAsync(GetJustClickKeyRequest request, MerchantCredentials credentials = null);
 
-        Task<GetExtraDataResponse> GetExtraDataAsync(GetExtraDataRequest request, MerchantCredentials credentials = null);
-
         Task<SaveCreditCardResponse> SaveCreditCardAsync(SaveCreditCardRequest request, MerchantCredentials credentials = null);
 
         Task<InvalidateCreditCardResponse> InvalidateCreditCardAsync(InvalidateCreditCardRequest request, MerchantCredentials credentials = null);
-
-        Task<SetExtraDataResponse> SetExtraDataAsync(SetExtraDataRequest request, MerchantCredentials credentials = null);
     }
 }
