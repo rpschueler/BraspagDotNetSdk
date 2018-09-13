@@ -7,7 +7,7 @@ SDK para integração simplificada nos serviços da plataforma [Braspag](http://www
 ### Features
 
 * Assembly para .NET Standard 2.0
-* Instalação simplificada utilizando [NuGet](https://www.braspag.com.br/packages/Braspag.Sdk/), sem necessidade de arquivos de configuração
+* Instalação simplificada utilizando [NuGet](https://www.nuget.org/packages/Braspag.Sdk/), sem necessidade de arquivos de configuração
 * Endpoints Braspag já configurados no pacote
 * Seleção de ambientes Sandbox ou Production
 * Métodos assíncronos para melhor desempenho nas requisições
