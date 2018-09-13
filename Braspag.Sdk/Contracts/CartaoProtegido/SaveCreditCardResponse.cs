@@ -2,5 +2,6 @@
 {
     public class SaveCreditCardResponse : BaseResponse
     {
+        public string JustClickKey { get; set; }
     }
 }

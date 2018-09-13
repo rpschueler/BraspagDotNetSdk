@@ -1,15 +1,13 @@
-﻿namespace Braspag.Sdk.Contracts.CartaoProtegido
+﻿using RestSharp.Deserializers;
+
+namespace Braspag.Sdk.Contracts.CartaoProtegido
 {
     public class ErrorData
     {
-        /// <summary>
-        /// ErrorCode
-        /// </summary>
+        [DeserializeAs(Name = "ErrorCode")]
         public int Code { get; set; }
 
-        /// <summary>
-        /// ErrorMessage
-        /// </summary>
+        [DeserializeAs(Name = "ErrorMessage")]
         public string Message { get; set; }
     }
 }

@@ -69,7 +69,10 @@ namespace Braspag.Sdk.CartaoProtegido
 
             if (httpResponse.StatusCode != HttpStatusCode.OK)
             {
-                throw new System.NotImplementedException();
+                return new GetCreditCardResponse
+                {
+                    HttpStatus = httpResponse.StatusCode
+                };
             }
 
             var jsonResponse = XmlDeserializer.Deserialize<GetCreditCardResponse>(httpResponse);

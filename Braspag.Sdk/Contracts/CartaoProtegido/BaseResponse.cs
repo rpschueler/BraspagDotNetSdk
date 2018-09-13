@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using RestSharp.Deserializers;
+using System.Collections.Generic;
 using System.Net;
 
 namespace Braspag.Sdk.Contracts.CartaoProtegido
@@ -7,11 +8,7 @@ namespace Braspag.Sdk.Contracts.CartaoProtegido
     {
         public HttpStatusCode HttpStatus { get; set; }
 
-        public string CorrelationId { get; set; }
-
-        /// <summary>
-        /// ErrorReportCollection
-        /// </summary>
+        [DeserializeAs(Name = "ErrorReportCollection")]
         public List<ErrorData> ErrorDataCollection { get; set; }
     }
 }
