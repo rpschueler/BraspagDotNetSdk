@@ -1,5 +1,4 @@
 ﻿using Braspag.Sdk.Contracts.Pagador;
-using System;
 using System.Threading.Tasks;
 
 namespace Braspag.Sdk.Pagador

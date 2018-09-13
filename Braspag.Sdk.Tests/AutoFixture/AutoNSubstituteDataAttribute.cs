@@ -21,7 +21,7 @@ namespace Braspag.Sdk.Tests.AutoFixture
         public static IFixture FixtureFactory()
         {
             var fixture = new Fixture()
-                .Customize(new AutoNSubstituteCustomization {ConfigureMembers = true})
+                .Customize(new AutoNSubstituteCustomization { ConfigureMembers = true })
                 .Customize(new PagadorCustomization());
 
             fixture.Behaviors

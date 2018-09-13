@@ -59,8 +59,7 @@ namespace Braspag.Sdk.Tests.AutoFixture
                         Wallet = null,
                         RecurrentPayment = null,
                         ReturnUrl = null
-                    })
-                );
+                    }));
         }
     }
 }
