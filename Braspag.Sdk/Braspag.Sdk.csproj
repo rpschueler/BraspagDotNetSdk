@@ -9,7 +9,10 @@
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <Authors>Braspag Labs</Authors>
     <Company>Braspag</Company>
-    <Description>SDK para serviços da plataforma Braspag</Description>
+    <Description>SDK para integração com serviços da plataforma Braspag</Description>
+    <PackageProjectUrl>https://github.com/ricardoabdalla/BraspagDotNetSdk</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/ricardoabdalla/BraspagDotNetSdk</RepositoryUrl>
+    <PackageTags>braspag pagador</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>
