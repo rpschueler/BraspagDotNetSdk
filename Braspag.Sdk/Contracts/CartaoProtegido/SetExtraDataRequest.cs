@@ -2,7 +2,7 @@
 
 namespace Braspag.Sdk.Contracts.CartaoProtegido
 {
-    public class SetExtraDataRequest
+    public class SetExtraDataRequest : BaseRequest
     {
         public string JustClickKey { get; set; }
 

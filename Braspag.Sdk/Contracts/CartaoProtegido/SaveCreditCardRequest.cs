@@ -2,7 +2,7 @@
 
 namespace Braspag.Sdk.Contracts.CartaoProtegido
 {
-    public class SaveCreditCardRequest
+    public class SaveCreditCardRequest : BaseRequest
     {
         public string CustomerIdentification { get; set; }
 

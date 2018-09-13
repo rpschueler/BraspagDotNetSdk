@@ -1,6 +1,6 @@
 ﻿namespace Braspag.Sdk.Contracts.CartaoProtegido
 {
-    public class GetMaskedCreditCardRequest
+    public class GetMaskedCreditCardRequest : BaseRequest
     {
         public string JustClickKey { get; set; }
 

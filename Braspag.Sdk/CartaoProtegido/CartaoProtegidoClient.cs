@@ -53,6 +53,9 @@ namespace Braspag.Sdk.CartaoProtegido
             sb.AppendLine("<soap:Body>");
             sb.AppendLine("<GetCreditCard xmlns=\"http://www.cartaoprotegido.com.br/WebService/\">");
             sb.AppendLine("<getCreditCardRequestWS>");
+            sb.AppendLine(request.RequestId.HasValue
+                ? $"<RequestId>{request.RequestId.Value}</RequestId>"
+                : $"<RequestId>{Guid.NewGuid()}</RequestId>");
             sb.AppendLine($"<MerchantKey>{currentCredentials.MerchantKey}</MerchantKey>");
             sb.AppendLine($"<JustClickKey>{request.JustClickKey}</JustClickKey>");
             sb.AppendLine($"<JustClickAlias>{request.JustClickAlias}</JustClickAlias>");
@@ -80,14 +83,111 @@ namespace Braspag.Sdk.CartaoProtegido
             return jsonResponse;
         }
 
-        public Task<GetMaskedCreditCardResponse> GetMaskedCreditCardAsync(GetMaskedCreditCardRequest request, MerchantCredentials credentials = null)
+        public async Task<GetMaskedCreditCardResponse> GetMaskedCreditCardAsync(GetMaskedCreditCardRequest request, MerchantCredentials credentials = null)
         {
-            throw new NotImplementedException();
+            if (request == null)
+                throw new ArgumentNullException(nameof(request));
+
+            if (_credentials == null && credentials == null)
+                throw new InvalidOperationException("Credentials are null");
+
+            var currentCredentials = credentials ?? _credentials;
+
+            if (string.IsNullOrWhiteSpace(currentCredentials.MerchantKey))
+                throw new InvalidOperationException("Invalid credentials: MerchantKey is null");
+
+            var httpRequest = new RestRequest(@"v2/cartaoprotegido.asmx", Method.POST)
+            {
+                RequestFormat = DataFormat.Xml,
+                XmlSerializer = new RestSharp.Serializers.DotNetXmlSerializer()
+            };
+
+            var sb = new StringBuilder();
+            sb.AppendLine("<soap:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">");
+            sb.AppendLine("<soap:Body>");
+            sb.AppendLine("<GetMaskedCreditCard xmlns=\"http://www.cartaoprotegido.com.br/WebService/\">");
+            sb.AppendLine("<getMaskedCreditCardRequestWS>");
+            sb.AppendLine(request.RequestId.HasValue
+                ? $"<RequestId>{request.RequestId.Value}</RequestId>"
+                : $"<RequestId>{Guid.NewGuid()}</RequestId>");
+            sb.AppendLine($"<MerchantKey>{currentCredentials.MerchantKey}</MerchantKey>");
+            sb.AppendLine($"<JustClickKey>{request.JustClickKey}</JustClickKey>");
+            sb.AppendLine($"<JustClickAlias>{request.JustClickAlias}</JustClickAlias>");
+            sb.AppendLine("</getMaskedCreditCardRequestWS>");
+            sb.AppendLine("</GetMaskedCreditCard>");
+            sb.AppendLine("</soap:Body>");
+            sb.AppendLine("</soap:Envelope>");
+
+            httpRequest.AddParameter("text/xml", sb.ToString(), ParameterType.RequestBody);
+
+            var cancellationTokenSource = new CancellationTokenSource();
+
+            var httpResponse = await RestClient.ExecuteTaskAsync(httpRequest, cancellationTokenSource.Token);
+
+            if (httpResponse.StatusCode != HttpStatusCode.OK)
+            {
+                return new GetMaskedCreditCardResponse
+                {
+                    HttpStatus = httpResponse.StatusCode
+                };
+            }
+
+            var jsonResponse = XmlDeserializer.Deserialize<GetMaskedCreditCardResponse>(httpResponse);
+            jsonResponse.HttpStatus = httpResponse.StatusCode;
+            return jsonResponse;
         }
 
-        public Task<GetJustClickKeyResponse> GetJustClickKeyAsync(GetJustClickKeyRequest request, MerchantCredentials credentials = null)
+        public async Task<GetJustClickKeyResponse> GetJustClickKeyAsync(GetJustClickKeyRequest request, MerchantCredentials credentials = null)
         {
-            throw new NotImplementedException();
+            if (request == null)
+                throw new ArgumentNullException(nameof(request));
+
+            if (_credentials == null && credentials == null)
+                throw new InvalidOperationException("Credentials are null");
+
+            var currentCredentials = credentials ?? _credentials;
+
+            if (string.IsNullOrWhiteSpace(currentCredentials.MerchantKey))
+                throw new InvalidOperationException("Invalid credentials: MerchantKey is null");
+
+            var httpRequest = new RestRequest(@"v2/cartaoprotegido.asmx", Method.POST)
+            {
+                RequestFormat = DataFormat.Xml,
+                XmlSerializer = new RestSharp.Serializers.DotNetXmlSerializer()
+            };
+
+            var sb = new StringBuilder();
+            sb.AppendLine("<soap:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">");
+            sb.AppendLine("<soap:Body>");
+            sb.AppendLine("<GetJustClickKey xmlns=\"http://www.cartaoprotegido.com.br/WebService/\">");
+            sb.AppendLine("<getJustClickKeyRequestWS>");
+            sb.AppendLine(request.RequestId.HasValue
+                ? $"<RequestId>{request.RequestId.Value}</RequestId>"
+                : $"<RequestId>{Guid.NewGuid()}</RequestId>");
+            sb.AppendLine($"<MerchantKey>{currentCredentials.MerchantKey}</MerchantKey>");
+            sb.AppendLine($"<SaveCreditCardRequestId>{request.SaveCreditCardRequestId}</SaveCreditCardRequestId>");
+            sb.AppendLine("</getJustClickKeyRequestWS>");
+            sb.AppendLine("</GetJustClickKey>");
+            sb.AppendLine("</soap:Body>");
+            sb.AppendLine("</soap:Envelope>");
+
+            httpRequest.AddParameter("text/xml", sb.ToString(), ParameterType.RequestBody);
+
+            var cancellationTokenSource = new CancellationTokenSource();
+
+            var httpResponse = await RestClient.ExecuteTaskAsync(httpRequest, cancellationTokenSource.Token);
+
+            if (httpResponse.StatusCode != HttpStatusCode.OK)
+            {
+                return new GetJustClickKeyResponse
+                {
+                    HttpStatus = httpResponse.StatusCode
+                };
+            }
+
+            var jsonResponse = XmlDeserializer.Deserialize<GetJustClickKeyResponse>(httpResponse);
+            jsonResponse.HttpStatus = httpResponse.StatusCode;
+            return jsonResponse;
         }
 
         public Task<GetExtraDataResponse> GetExtraDataAsync(GetExtraDataRequest request, MerchantCredentials credentials = null)
