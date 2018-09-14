@@ -15,6 +15,10 @@ namespace Braspag.Sdk.Contracts.BraspagAuth
         [DeserializeAs(Name = "expires_in")]
         public int ExpiresIn { get; set; }
 
-        public string ErrorMessage { get; set; }
+        [DeserializeAs(Name = "error")]
+        public string Error { get; set; }
+
+        [DeserializeAs(Name = "error_description")]
+        public string ErrorDescription { get; set; }
     }
 }

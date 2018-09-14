@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Net;
-using System.Threading;
-using System.Threading.Tasks;
-using Braspag.Sdk.Common;
+﻿using Braspag.Sdk.Common;
 using Braspag.Sdk.Contracts.BraspagAuth;
-using Braspag.Sdk.Contracts.Pagador;
 using RestSharp;
 using RestSharp.Deserializers;
+using System;
+using System.ComponentModel;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 using Environment = Braspag.Sdk.Common.Environment;
 
 namespace Braspag.Sdk.BraspagAuth
@@ -45,20 +43,29 @@ namespace Braspag.Sdk.BraspagAuth
             httpRequest.AddHeader("Content-Type", "application/x-www-form-urlencoded");
             httpRequest.AddHeader("Authorization", $"Basic {credentials}");
 
-            httpRequest.AddParameter("application/x-www-form-urlencoded", $"grant_type={request.GrantType.GetAttributeOfType<DescriptionAttribute>().Description}", ParameterType.RequestBody);
+            var sb = new StringBuilder();
+            sb.Append($"grant_type={request.GrantType.GetAttributeOfType<DescriptionAttribute>().Description}");
+
+            switch (request.GrantType)
+            {
+                case OAuthGrantType.Password:
+                    sb.Append($"&username={request.Username}&password={request.Password}");
+                    break;
+                case OAuthGrantType.RefreshToken:
+                    sb.Append($"&refresh_token={request.RefreshToken}");
+                    break;
+            }
+
+            if (!string.IsNullOrWhiteSpace(request.Scope))
+            {
+                sb.Append($"&scope={request.Scope}");
+            }
+
+            httpRequest.AddParameter("application/x-www-form-urlencoded", sb.ToString(), ParameterType.RequestBody);
 
             var cancellationTokenSource = new CancellationTokenSource();
 
             var httpResponse = await RestClient.ExecuteTaskAsync(httpRequest, cancellationTokenSource.Token);
-
-            if (httpResponse.StatusCode != HttpStatusCode.OK)
-            {
-                return new AccessTokenResponse
-                {
-                    HttpStatus = httpResponse.StatusCode,
-                    //ErrorDataCollection = JsonDeserializer.Deserialize<List<ErrorData>>(httpResponse)
-                };
-            }
 
             var jsonResponse = JsonDeserializer.Deserialize<AccessTokenResponse>(httpResponse);
             jsonResponse.HttpStatus = httpResponse.StatusCode;
@@ -67,7 +74,7 @@ namespace Braspag.Sdk.BraspagAuth
 
         private static string Base64Encode(string plainText)
         {
-            var plainTextBytes = System.Text.Encoding.UTF8.GetBytes(plainText);
+            var plainTextBytes = Encoding.UTF8.GetBytes(plainText);
             return Convert.ToBase64String(plainTextBytes);
         }
     }
