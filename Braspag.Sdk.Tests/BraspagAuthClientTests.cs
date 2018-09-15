@@ -16,8 +16,8 @@ namespace Braspag.Sdk.Tests
             var request = new AccessTokenRequest
             {
                 GrantType = OAuthGrantType.ClientCredentials,
-                ClientId = "D3E50953-5D6B-4BA0-A854-7DBA4F26026F",
-                ClientSecret = "43VtT15I5l7BocriFWPAlhTjd55VupXq5jVVbubJWLA="
+                ClientId = "b7554867-c69a-4fd2-b059-40c08f6f924a",
+                ClientSecret = "9tV4mICf6YmKiRkfPce8+jHc4M2hLGgBdMCxnlj3LDY="
             };
 
             var response = await sut.CreateAccessTokenAsync(request);
@@ -32,7 +32,7 @@ namespace Braspag.Sdk.Tests
             var request = new AccessTokenRequest
             {
                 GrantType = OAuthGrantType.ClientCredentials,
-                ClientId = "D3E50953-5D6B-0000-0000-7DBA4F26026F",
+                ClientId = "b7554867-5D6B-0000-0000-7DBA4F26026F",
                 ClientSecret = "43VtT15I5l7BocriFWPAlhTjd55VupXq5jVVbubJWLA="
             };
 
@@ -50,7 +50,7 @@ namespace Braspag.Sdk.Tests
             var request = new AccessTokenRequest
             {
                 GrantType = OAuthGrantType.ClientCredentials,
-                ClientId = "D3E50953-5D6B-4BA0-A854-7DBA4F26026F",
+                ClientId = "b7554867-c69a-4fd2-b059-40c08f6f924a",
                 ClientSecret = "43VtT15I5l7BocriFWPAlhTjd55VupXq5jVVbu99999="
             };
 
