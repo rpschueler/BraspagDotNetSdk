@@ -30,26 +30,26 @@ namespace Braspag.Sdk.Tests
 
             var request = new AnalysisRequest
             {
-                //Transaction = new TransactionData
-                //{
-                //    OrderId = DateTime.Now.Ticks.ToString(),
-                //    Date = "2018-09-15 13:30:00.860",
-                //    Amount = 1000
-                //},
-                //Card = new CardData
-                //{
-                //    Holder = "BJORN IRONSIDE",
-                //    Brand = "visa",
-                //    Number = "1000100010001000",
-                //    Expiration = "10/2025"
-                //},
-                //Customer = new CustomerData
-                //{
-                //    Name = "Bjorn Ironside",
-                //    Identity = "762.502.520-96",
-                //    IpAddress = "127.0.0.1",
-                //    Email = "bjorn.ironside@vikings.com.br"
-                //}
+                Transaction = new TransactionData
+                {
+                    OrderId = DateTime.Now.Ticks.ToString(),
+                    Date = "2018-09-15 13:30:00.860",
+                    Amount = 1000
+                },
+                Card = new CardData
+                {
+                    Holder = "BJORN IRONSIDE",
+                    Brand = "visa",
+                    Number = "1000100010001000",
+                    Expiration = "10/2025"
+                },
+                Customer = new CustomerData
+                {
+                    Name = "Bjorn Ironside",
+                    Identity = "762.502.520-96",
+                    IpAddress = "127.0.0.1",
+                    Email = "bjorn.ironside@vikings.com.br"
+                }
             };
 
             var response = await sut.PerformAnalysisAsync(request, new MerchantCredentials { AccessToken = authResponse.Token, MerchantId = "94E5EA52-79B0-7DBA-1867-BE7B081EDD97" } );
