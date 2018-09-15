@@ -1,6 +1,8 @@
 # Braspag SDK para .NET Standard
 
-[![Build status](https://braspag.visualstudio.com/Innovation/_apis/build/status/Braspag-DotNet-SDK)](https://braspag.visualstudio.com/Innovation/_build/latest?definitionId=470)
+| CI | Release |
+|---|---|
+| [![Build status](https://braspag.visualstudio.com/Innovation/_apis/build/status/Braspag-DotNet-SDK?branchName=develop)](https://braspag.visualstudio.com/Innovation/_build/latest?definitionId=470) | [![Build status](https://braspag.visualstudio.com/Innovation/_apis/build/status/Braspag-DotNet-SDK?branchName=master)](https://braspag.visualstudio.com/Innovation/_build/latest?definitionId=470) |
 
 SDK para integração simplificada nos serviços da plataforma [Braspag](http://www.braspag.com.br/#solucoes)
 
