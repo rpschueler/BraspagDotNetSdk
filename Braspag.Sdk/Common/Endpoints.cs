@@ -13,5 +13,13 @@
         public const string CartaoProtegidoSandbox = "https://cartaoprotegidosandbox.braspag.com.br/";
 
         public const string CartaoProtegidoProduction = "https://cartaoprotegido.braspag.com.br/";
+
+        public const string VelocityApiSandbox = "https://velocitysandbox.braspag.com.br/";
+
+        public const string VelocityApiProduction = "https://velocity.braspag.com.br/";
+
+        public const string BraspagAuthSandbox = "https://authsandbox.braspag.com.br/";
+
+        public const string BraspagAuthProduction = "https://auth.braspag.com.br/";
     }
 }

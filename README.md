@@ -1,20 +1,24 @@
 # Braspag SDK para .NET Standard
 
-[![Build status](https://braspag.visualstudio.com/Innovation/_apis/build/status/Braspag-DotNet-SDK)](https://braspag.visualstudio.com/Innovation/_build/latest?definitionId=470)
+| Develop | Master |
+|---|---|
+| [![Build status](https://braspag.visualstudio.com/Innovation/_apis/build/status/Braspag-DotNet-SDK?branchName=develop)](https://braspag.visualstudio.com/Innovation/_build/latest?definitionId=470) | [![Build status](https://braspag.visualstudio.com/Innovation/_apis/build/status/Braspag-DotNet-SDK?branchName=master)](https://braspag.visualstudio.com/Innovation/_build/latest?definitionId=470) |
 
-SDK para integração simplificada nos serviços da plataforma [Braspag](https://www.braspag.com.br/packages/Braspag.Sdk/)
+SDK para integração simplificada nos serviços da plataforma [Braspag](http://www.braspag.com.br/#solucoes)
 
 ### Features
 
 * Assembly para .NET Standard 2.0
-* Instalação simplificada utilizando [NuGet](http://www.braspag.com.br/#solucoes), sem necessidade de arquivos de configuração
+* Instalação simplificada utilizando [NuGet](https://www.nuget.org/packages/Braspag.Sdk/), sem necessidade de arquivos de configuração
 * Endpoints Braspag já configurados no pacote
 * Seleção de ambientes Sandbox ou Production
 * Métodos assíncronos para melhor desempenho nas requisições
+* Client para a API Braspag Auth (Obtenção de tokens de acesso)
 * Client para a API do Pagador (Autorização, Captura, Cancelamento/Estorno, Consulta)
 * Client para a API do Cartão Protegido (Salvar cartão, Recuperar cartão, Invalidar cartão)
+* Client para a API de análises do Velocity
 
-### Exemplo de Uso
+### Pagador: Exemplo de Uso
 
 ```csharp
 
@@ -63,6 +67,36 @@ var request = new SaleRequest
 };
 
 /* Obtenção do resultado da operação */
-var response = await client.CreateSaleAsync(request);
+var response = await pagadorClient.CreateSaleAsync(request);
+
+```
+
+
+### Cartão Protegido: Exemplo de Uso
+
+```csharp
+
+/* Criação do Cliente Cartão Protegido */
+var cartaoProtegidoClient = new CartaoProtegidoClient(new CartaoProtegidoClientOptions
+{
+    Environment = Environment.Sandbox,
+    Credentials = new MerchantCredentials
+    {
+        MerchantKey = "CHAVE_DA_LOJA"
+    }
+});
+
+/* Salvar cartão em cofre PCI */
+var request = new SaveCreditCardRequest
+{
+    CustomerName = "Bjorn Ironside",
+    CustomerIdentification = "762.502.520-96",
+    CardHolder = "BJORN IRONSIDE",
+    CardExpiration = "10/2025",
+    CardNumber = "1000100010001000"
+};
+
+/* Obtenção do resultado da operação */
+var response = await cartaoProtegidoClient.SaveCreditCardAsync(request);
 
 ```

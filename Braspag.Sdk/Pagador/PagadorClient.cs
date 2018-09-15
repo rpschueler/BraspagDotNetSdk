@@ -65,7 +65,7 @@ namespace Braspag.Sdk.Pagador
                 return new SaleResponse
                 {
                     HttpStatus = httpResponse.StatusCode,
-                    ErrorDataCollection = JsonDeserializer.Deserialize<List<ErrorData>>(httpResponse)
+                    ErrorDataCollection = httpResponse.StatusCode != HttpStatusCode.Forbidden ? JsonDeserializer.Deserialize<List<ErrorData>>(httpResponse) : null
                 };
             }
 
