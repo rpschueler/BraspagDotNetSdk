@@ -11,8 +11,10 @@ SDK para integração simplificada nos serviços da plataforma [Braspag](http://www
 * Endpoints Braspag já configurados no pacote
 * Seleção de ambientes Sandbox ou Production
 * Métodos assíncronos para melhor desempenho nas requisições
+* Client para a API Braspag Auth (Obtenção de tokens de acesso)
 * Client para a API do Pagador (Autorização, Captura, Cancelamento/Estorno, Consulta)
 * Client para a API do Cartão Protegido (Salvar cartão, Recuperar cartão, Invalidar cartão)
+* Client para a API de análises do Velocity
 
 ### Exemplo de Uso
 
