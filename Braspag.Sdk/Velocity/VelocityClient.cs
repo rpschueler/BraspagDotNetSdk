@@ -57,7 +57,7 @@ namespace Braspag.Sdk.Velocity
 
             var httpResponse = await RestClient.ExecuteTaskAsync(httpRequest, cancellationTokenSource.Token);
 
-            if (httpResponse.StatusCode != HttpStatusCode.OK)
+            if (httpResponse.StatusCode != HttpStatusCode.Created)
             {
                 return new AnalysisResponse
                 {
