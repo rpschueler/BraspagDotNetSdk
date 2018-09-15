@@ -16,7 +16,7 @@ SDK para integração simplificada nos serviços da plataforma [Braspag](http://www
 * Client para a API do Cartão Protegido (Salvar cartão, Recuperar cartão, Invalidar cartão)
 * Client para a API de análises do Velocity
 
-### Exemplo de Uso
+### Pagador: Exemplo de Uso
 
 ```csharp
 
@@ -65,6 +65,36 @@ var request = new SaleRequest
 };
 
 /* Obtenção do resultado da operação */
-var response = await client.CreateSaleAsync(request);
+var response = await pagadorClient.CreateSaleAsync(request);
+
+```
+
+
+### Cartão Protegido: Exemplo de Uso
+
+```csharp
+
+/* Criação do Cliente Cartão Protegido */
+var cartaoProtegidoClient = new CartaoProtegidoClient(new CartaoProtegidoClientOptions
+{
+    Environment = Environment.Sandbox,
+    Credentials = new MerchantCredentials
+    {
+        MerchantKey = "CHAVE_DA_LOJA"
+    }
+});
+
+/* Salvar cartão em cofre PCI */
+var request = new SaveCreditCardRequest
+{
+    CustomerName = "Bjorn Ironside",
+    CustomerIdentification = "762.502.520-96",
+    CardHolder = "BJORN IRONSIDE",
+    CardExpiration = "10/2025",
+    CardNumber = "1000100010001000"
+};
+
+/* Obtenção do resultado da operação */
+var response = await cartaoProtegidoClient.SaveCreditCardAsync(request);
 
 ```
