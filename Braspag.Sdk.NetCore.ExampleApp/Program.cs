@@ -20,8 +20,8 @@ namespace Braspag.Sdk.NetCore.ExampleApp
                 Environment = Environment.Sandbox,
                 Credentials = new MerchantCredentials
                 {
-                    MerchantId = "94E5EA52-79B0-7DBA-1867-BE7B081EDD97",
-                    MerchantKey = "0123456789012345678901234567890123456789"
+                    MerchantId = "33B6AC07-C48D-4F13-A5B9-D3516A378A0C",
+                    MerchantKey = "d6Rb3OParKvLfzNrURzwcT0f1lzNazS1o19yP6Y8"
                 }
             });
 

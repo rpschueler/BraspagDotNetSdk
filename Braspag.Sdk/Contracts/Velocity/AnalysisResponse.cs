@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System.Collections.Generic;
+using System.Net;
 
 namespace Braspag.Sdk.Contracts.Velocity
 {
@@ -9,5 +10,7 @@ namespace Braspag.Sdk.Contracts.Velocity
         public AnalysisResultData AnalysisResult { get; set; }
 
         public TransactionData Transaction { get; set; }
+
+        public List<ErrorData> ErrorDataCollection { get; set; }
     }
 }

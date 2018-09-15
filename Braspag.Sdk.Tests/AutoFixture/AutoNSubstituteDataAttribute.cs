@@ -22,7 +22,9 @@ namespace Braspag.Sdk.Tests.AutoFixture
         {
             var fixture = new Fixture()
                 .Customize(new AutoNSubstituteCustomization { ConfigureMembers = true })
-                .Customize(new PagadorCustomization());
+                .Customize(new PagadorCustomization())
+                .Customize(new CartaoProtegidoCustomization())
+                .Customize(new VelocityCustomization());
 
             fixture.Behaviors
                 .OfType<ThrowingRecursionBehavior>()

@@ -31,17 +31,7 @@ namespace Braspag.Sdk.Tests
 
             var response = await sut.PerformAnalysisAsync(request, new MerchantCredentials { AccessToken = authResponse.Token, MerchantId = "94E5EA52-79B0-7DBA-1867-BE7B081EDD97" } );
 
-            Assert.Equal(HttpStatusCode.Created, response.HttpStatus);
+            Assert.Equal(HttpStatusCode.OK, response.HttpStatus);
         }
-
-        //[Theory, AutoNSubstituteData]
-        //public async Task CreateSaleAsync_ForValidCreditCardWithAutomaticCapture_ReturnsPaymentConfirmed(PagadorClient sut, SaleRequest request)
-        //{
-        //    request.Payment.Capture = true;
-        //    var response = await sut.CreateSaleAsync(request);
-
-        //    Assert.Equal(HttpStatusCode.Created, response.HttpStatus);
-        //    Assert.Equal(TransactionStatus.PaymentConfirmed, response.Payment.Status);
-        //}
     }
 }

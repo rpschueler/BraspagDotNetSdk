@@ -3,6 +3,7 @@ using Braspag.Sdk.Contracts.Velocity;
 using RestSharp;
 using RestSharp.Deserializers;
 using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
@@ -56,12 +57,12 @@ namespace Braspag.Sdk.Velocity
 
             var httpResponse = await RestClient.ExecuteTaskAsync(httpRequest, cancellationTokenSource.Token);
 
-            if (httpResponse.StatusCode != HttpStatusCode.Created)
+            if (httpResponse.StatusCode != HttpStatusCode.OK)
             {
                 return new AnalysisResponse
                 {
                     HttpStatus = httpResponse.StatusCode,
-                    //ErrorDataCollection = JsonDeserializer.Deserialize<List<ErrorData>>(httpResponse)
+                    ErrorDataCollection = JsonDeserializer.Deserialize<List<ErrorData>>(httpResponse)
                 };
             }
 
